@@ -1,0 +1,402 @@
+Create the Main Table CREATE TABLE Products (
+product_id NUMBER(10) PRIMARY KEY, name VARCHAR2(100),
+quantity_in_stock NUMBER(5), unit_price NUMBER(6,2)
+);
+
+SQL> DESC PRODUCTS;
+
+Name	Null?	Type
+
+PRODUCT_ID	NOT NULL NUMBER(10)
+
+NAME	VARCHAR2(100)
+
+QUANTITY_IN_STOCK		NUMBER(5) UNIT_PRICE	NUMBER(6,2)
+
+Insert Sample Records
+
+INSERT INTO Products VALUES (1, 'Foam Dinner Plate', 70, 1.21);
+
+INSERT INTO Products VALUES (2, 'Pork - Bacon, Back Peameal', 49, 4.65); INSERT INTO Products VALUES (3, 'Lettuce - Romaine, Heart', 38, 3.35); INSERT INTO Products VALUES (4, 'Broccolini - Gaylan, Chinese', 90, 4.53); INSERT INTO Products VALUES (5, 'Sauce - Ranch Dressing', 94, 1.63); INSERT INTO Products VALUES (6, 'Petit Baguette', 14, 2.39);
+INSERT INTO Products VALUES (7, 'Sweet Pea Sprouts', 98, 3.29); INSERT INTO Products VALUES (8, 'Island Oasis - Raspberry', 26, 0.74);
+
+
+SQL>
+
+SQL> SELECT*FROM PRODUCTS;
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+1
+
+Foam Dinner Plate
+
+70	1.21
+
+
+
+2
+
+Pork - Bacon, Back Peameal
+
+49	4.65
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+
+
+3
+
+Lettuce - Romaine, Heart
+
+38	3.35
+
+
+
+4
+
+Broccolini - Gaylan, Chinese
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+90	4.53
+
+
+
+5
+
+Sauce - Ranch Dressing
+
+94	1.63
+
+
+
+6
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+Petit Baguette
+
+14	2.39
+
+
+
+7
+
+Sweet Pea Sprouts
+
+98	3.29
+
+
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+8
+
+Island Oasis - Raspberry
+
+26	.74
+
+Subquery with SELECT Statement SELECT *
+FROM Products WHERE product_id IN (
+SELECT product_id FROM Products
+
+WHERE quantity_in_stock > 45
+
+);
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+1
+
+Foam Dinner Plate
+
+70	1.21
+
+
+
+2
+
+Pork - Bacon, Back Peameal
+
+49	4.65
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+
+
+4
+
+Broccolini - Gaylan, Chinese
+
+90	4.53
+
+
+
+5
+
+Sauce - Ranch Dressing
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+94	1.63
+
+
+
+7
+
+Sweet Pea Sprouts
+
+98	3.29
+
+Create Backup Table (for Subquery Examples) CREATE TABLE Products_Bkp AS
+SELECT *
+
+FROM Products WHERE 1 = 0;
+
+
+SQL> DESC PRODUCTS_BKP
+
+Name	Null?	Type
+
+
+
+PRODUCT_ID		NUMBER(10) NAME	VARCHAR2(100)
+QUANTITY_IN_STOCK		NUMBER(5) UNIT_PRICE	NUMBER(6,2)
+Subquery with INSERT Statement INSERT INTO Products_Bkp SELECT *
+FROM Products WHERE product_id IN (
+SELECT product_id FROM Products
+);
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+1
+
+Foam Dinner Plate
+
+70	1.21
+
+
+
+2
+
+Pork - Bacon, Back Peameal
+
+49	4.65
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+3
+
+Lettuce - Romaine, Heart
+
+38	3.35
+
+
+
+4
+
+Broccolini - Gaylan, Chinese
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+90	4.53
+
+
+
+5
+
+Sauce - Ranch Dressing
+
+94	1.63
+
+
+
+6
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+
+
+Petit Baguette
+
+14	2.39
+
+
+
+7
+
+Sweet Pea Sprouts
+
+98	3.29
+
+
+
+
+
+PRODUCT_ID
+
+
+
+NAME
+
+
+
+QUANTITY_IN_STOCK UNIT_PRICE
+
+8
+
+Island Oasis - Raspberry
+
+26	.74
+
+Subquery with UPDATE Statement
+
+
+UPDATE Products_Bkp SET unit_price = 5 WHERE unit_price > (
+SELECT MIN(unit_price) FROM Products
+);
+
+6. Subquery with DELETE Statement DELETE FROM Products_Bkp WHERE unit_price < (
+SELECT MAX(unit_price) FROM Products
+);
