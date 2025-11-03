@@ -1,0 +1,224 @@
+set serveroutput on;
+
+SQL>declare
+b number;
+c number; begin c:=&temp;
+select mark into b from student where s_id=c; if b>50 then
+dbms_output.put_line(‘PASS’); elsif dbms_output.put_line(‘FAIL’); end if;
+end;
+/
+
+Output:
+Enter value for temp:10 Old 5:c:=&temp;
+New 5:c:=10; PASS
+
+PL/SQL procedure successfully completed.
+
+
+Using IF-THEN statement
+SQL>set server output on;
+
+SQL> DECLARE
+a NUMBER;
+b NUMBER;
+c NUMBER; BEGIN
+a := &a; -- Accepts value for 'a'
+b := &b; -- Accepts value for 'b'
+c := &c; -- Accepts value for 'c'
+IF (a > b) AND (a > c) THEN
+dbms_output.put_line('a is greater'); ELSIF (b > c) THEN
+dbms_output.put_line('b is greater'); ELSE
+dbms_output.put_line('c is greater'); END IF;
+END;
+/
+Output:
+Enter value for a:2 Old 6:a:=&a;
+New 6:a:=2;
+
+Enter value for b:3 Old 7:b:=&b;
+New 7:b:=3;
+
+Enter value for c:4 Old 8:c:=&c;
+New 8:c:=4; C is greater.
+PL/SQL procedure successfully completed.
+
+
+
+Using REVERSE FOR loop
+
+
+
+SQL>declare
+a varchar(20);
+b varchar(20); i number; begin a:=’&a’;
+for i in reverse 1..length(a) loop
+b:=b||substr(a,i,1); end loop;
+dbms_output.put_line(b); if a=b then
+dbms_output.put_line(‘THE GIVEN STRING IS PALINDROME’); else
+dbms_output.put_line(‘THE GIVEN STRING IS NOT A PALINDROME’); end if;
+end;
+/
+
+Output:
+Enter value for a:madam Old 6:a:=’&a’;
+New 6:a:=’madam’; Madam
+
+THE GIVEN STRING IS PALINDROME.
+
+PL/SQL procedure successfully completed.
+
+
+Using FOR loop
+
+SQL>declare
+a number;
+b number;
+c number;
+i number;
+r number;
+
+begin
+a:=-1;
+b:=1;
+r:=&range;
+for i in 1..r
+loop
+c:=a+b;
+dbms_output.put_line(c);
+a:=b;
+b:=c;
+end loop;
+end;
+/
+
+Output:
+
+Enter value for range:5 Old 10:r:=&range;
+New 10:r:=5; 0
+1
+1
+2
+3
+
+PL/SQL procedure successfully completed.
+
+Using FOR loop
+
+SQL>declare
+n number;
+i number;
+s number;
+begin
+s:=0;
+n:=&n;
+for i in 1..n
+loop
+10 s:=s+i;
+
+end loop;
+dbms_output.put_line(‘SUM OF FIRST’||n||’NATURAL NUMBERS=’||s);
+end;
+/
+
+Output:
+Enter value for n:5 Old 7:n:=&n;
+New 7:n:=5;
+
+SUM OF FIRST 5 NATURAL NUMBERS = 15
+PL/SQL procedure successfully completed.
+
+Extended IF-THEN statement
+
+SQL>declare
+grade char(1);
+begin
+grade:=’B’;
+if grade=’A’ then
+dbms_output.put_line(‘EXCELLENT’);
+elsif grade=’B’ then
+dbms_output.put_line(‘VERY GOOD’);
+elsif grade=’C’ then
+dbms_output.put_line(‘GOOD’);
+elsif grade=’D’ then
+dbms_output.put_line(‘FAIR’);
+elsif grade=’F’ then
+dbms_output.put_line(‘POOR’);
+else
+dbms_output.put_line(‘NO SUCH GRADE’);
+end if;
+end;
+/
+
+Output:
+VERY GOOD
+
+PL/SQL procedure successfully completed.
+
+
+Using the CASE-WHEN statement
+
+SQL>declare
+grade char(1);
+begin
+grade:=’A’;
+case grade
+when ’A’ then dbms_output.put_line(‘EXCELLENT’);
+when ’B’ then dbms_output.put_line(‘VERY GOOD’);
+when ’C’ then dbms_output.put_line(‘GOOD’);
+when ’D’ then dbms_output.put_line(‘FAIR’);
+when ’F’ then dbms_output.put_line(‘POOR’);
+else dbms_output.put_line(‘NO SUCH GRADE’);
+end case;
+end;
+/
+
+Output:
+EXCELLENT
+
+PL/SQL procedure successfully completed.
+
+Using the GOTO statement
+
+SQL>declare
+p varchar(30);
+n pls_integer:=37;
+begin
+for j in 2..round(sqrt(n)) loop
+if n mod j=0 then
+p:=’IS NOT A PRIME NUMBER’;
+goto print_now;
+end if;
+end loop;
+p:=’IS A PRIME NUMBER’;
+<<print_now>>
+dbms_output.put_line(‘to_char(n)||p);
+end;
+
+/
+
+Output:
+37 IS A PRIME NUMBER.
+
+PL/SQL procedure is successfully completed.
+
+
+Using a NULL statement to allow a GOTO to a label
+
+SQL>declare
+done Boolean;
+begin
+for i in 1..5 loop
+if done then
+dbms_output.put_line(‘DONE’);
+goto end_loop;
+end if;
+<<end loop>>
+null;
+end loop;
+end;
+/
+
+Output:
+DONE DONE DONE DONE DONE
+
+PL/SQL procedure successfully completed.
