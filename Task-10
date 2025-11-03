@@ -1,0 +1,118 @@
+CRUD OPERATIONS
+db.createCollection("mylab")
+{ "ok" : 1 }
+>
+db.mylab.insertOne({item:"canvas",qty:100,tags:["cotton"],size:{h:28,w: 35.5,uom:"cm"}})
+{
+"acknowledged" : true,
+"insertedId" : ObjectId("627d13acc73990c074e6397c")
+
+}
+db.mylab.find({item:"canvas"})
+{ "_id" : ObjectId("627d13acc73990c074e6397c"), "item" : "canvas", "qty" : 100, "tags" : [ "cotton" ], "size" : { "h" : 28, "w" : 35.5, "uom" : "cm" } }
+>
+db.mylab.insertMany([{item:"journal",qty:25,tags:["blank","red"],size:{h:
+14,w:21,uom:"cm"}},{item:"mat",qty:85,tags:["gray"],size:{h:27.9,w:35.5,
+uom:"cm"}},{item:"mousepad",qty:25,tags:["gel","blue"],size:{h:19,w:22. 85,uom:"cm"}}])
+{
+"acknowledged" : true, "insertedIds" : [
+ObjectId("627d1598c73990c074e6397d"), ObjectId("627d1598c73990c074e6397e"),
+ObjectId("627d1598c73990c074e6397f")
+]
+}
+db.mylab.find({},{item:1,qty:1})
+{ "_id" : ObjectId("627d13acc73990c074e6397c"), "item" : "canvas", "qty" : 100 }
+{ "_id" : ObjectId("627d1598c73990c074e6397d"), "item" : "journal", "qty" : 25 }
+{ "_id" : ObjectId("627d1598c73990c074e6397e"), "item" : "mat", "qty" : 85 }
+
+{ "_id" : ObjectId("627d1598c73990c074e6397f"), "item" : "mousepad", "qty" : 25 }
+db.mylab.find({},{item:1,qty:1}).pretty()
+{
+"_id" : ObjectId("627d13acc73990c074e6397c"), "item" : "canvas",
+"qty" : 100
+}
+{
+"_id" : ObjectId("627d1598c73990c074e6397d"), "item" : "journal",
+"qty" : 25
+}
+{ "_id" : ObjectId("627d1598c73990c074e6397e"), "item" : "mat", "qty" : 85 }
+{
+"_id" : ObjectId("627d1598c73990c074e6397f"), "item" : "mousepad",
+"qty" : 25
+}
+db.mylab.find({item:"canvas"}).pretty().sort({item:-1})
+{
+"_id" : ObjectId("627d13acc73990c074e6397c"),
+
+"item" : "canvas", "qty" : 100,
+"tags" : [ "cotton"
+],
+"size" : {
+"h" : 28,
+"w" : 35.5,
+"uom" : "cm"
+}
+}
+db.mylab.deleteOne({item:"journal"}
+...
+...
+db.mylab.find({},{item:1,qty:1}).pretty()
+{
+"_id" : ObjectId("627d13acc73990c074e6397c"), "item" : "canvas",
+"qty" : 100
+}
+{
+"_id" : ObjectId("627d1598c73990c074e6397d"),
+
+"item" : "journal", "qty" : 25
+}
+{ "_id" : ObjectId("627d1598c73990c074e6397e"), "item" : "mat", "qty" : 85 }
+{
+"_id" : ObjectId("627d1598c73990c074e6397f"),"item" : "mousepad","qty" : 25}
+
+
+
+
+Out put
+
+
+After insertOne
+
+
+{ "acknowledged" : true, "insertedId" : ObjectId("627d13acc73990c074e6397c") }
+
+
+After insertMany
+
+
+{
+"acknowledged" : true, "insertedIds" : [
+ObjectId("627d1598c73990c074e6397d"),
+
+ObjectId("627d1598c73990c074e6397e"),
+ObjectId("627d1598c73990c074e6397f")
+]
+}
+
+
+Find (item & qty only):
+
+
+{ "item" : "canvas", "qty" : 100 }
+{ "item" : "journal", "qty" : 25 }
+{ "item" : "mat", "qty" : 85 }
+{ "item" : "mousepad", "qty" : 25 }
+
+
+After deleteOne({item:"journal"}):
+
+
+{ "acknowledged" : true, "deletedCount" : 1 }
+
+
+Final find()
+
+
+{ "item" : "canvas", "qty" : 100 }
+{ "item" : "mat", "qty" : 85 }
+{ "item" : "mousepad", "qty" : 25 }
