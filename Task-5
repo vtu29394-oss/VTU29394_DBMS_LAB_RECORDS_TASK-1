@@ -1,0 +1,799 @@
+Create Tables
+
+CREATE TABLE Sailors (
+
+sid NUMBER(10) PRIMARY KEY, sname VARCHAR2(32),
+rating NUMBER(3), age NUMBER(5,1)
+);
+
+
+
+SQL> desc sailors;
+
+Name	Null?	Type
+
+SID	NOT NULL NUMBER(10) SNAME		VARCHAR2(32)
+RATING	NUMBER(3)
+
+AGE	NUMBER(5,1)
+
+
+
+CREATE TABLE Boats (
+
+bid NUMBER(10) PRIMARY KEY, bname VARCHAR2(32),
+color VARCHAR2(32)
+
+);
+
+
+
+SQL> desc reserves;
+
+Name	Null?	Type
+
+SID	NOT NULL NUMBER(10)
+
+BID	NOT NULL NUMBER(10)
+
+DAY	NOT NULL DATE
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE Reserves ( sid NUMBER(10),
+bid NUMBER(10),
+
+day DATE,
+
+PRIMARY KEY (sid, bid, day),
+
+CONSTRAINT fk_sid FOREIGN KEY (sid) REFERENCES Sailors(sid), CONSTRAINT fk_bid FOREIGN KEY (bid) REFERENCES Boats(bid)
+);
+
+
+
+SQL> desc boats
+
+Name	Null?	Type
+
+BID	NOT NULL NUMBER(10) BNAME		VARCHAR2(32)
+COLOR	VARCHAR2(32)
+
+
+
+-- Sailors Data
+
+INSERT INTO Sailors VALUES (22, 'Dustin', 7, 45.0);
+
+INSERT INTO Sailors VALUES (29, 'Brutus', 1, 33);
+
+INSERT INTO Sailors VALUES (31, 'Lubber', 8, 55.5);
+
+INSERT INTO Sailors VALUES (32, 'Andy', 8, 25.5);
+
+INSERT INTO Sailors VALUES (58, 'Rusty', 10, 35);
+
+INSERT INTO Sailors VALUES (64, 'Horatio', 7, 35);
+
+INSERT INTO Sailors VALUES (71, 'Zorba', 10, 16);
+
+INSERT INTO Sailors VALUES (74, 'Horatio', 9, 40);
+
+INSERT INTO Sailors VALUES (85, 'Art', 3, 25.5);
+
+INSERT INTO Sailors VALUES (95, 'Bob', 3, 63.5);
+
+
+
+SQL> select*from sailors;
+
+
+
+SID SNAME	RATING	AGE
+
+
+
+
+22 Dustin
+7
+45
+
+29 Brutus
+1
+33
+
+31 Lubber
+8
+55.5
+
+32 Andy
+8
+25.5
+
+58 Rusty
+10
+35
+
+64 Horatio
+7
+35
+
+71 Zorba
+10
+16
+
+74 Horatio
+9
+40
+
+85 Art
+3
+25.5
+
+95 Bob
+3
+63.5
+
+
+
+
+-- Boats Data
+
+INSERT INTO Boats VALUES (101, 'Interlake', 'Blue'); INSERT INTO Boats VALUES (102, 'Interlake', 'Red'); INSERT INTO Boats VALUES (103, 'Clipper', 'Green'); INSERT INTO Boats VALUES (104, 'Marine', 'Red');
+
+
+
+SQL> select*from boats;
+
+
+
+BID BNAME	COLOR
+
+
+
+Interlake	Blue
+
+Interlake	Red
+
+Clipper	Green
+
+Marine	Red
+
+-- Reserves Data
+
+INSERT INTO Reserves VALUES (22, 101, DATE '1998-10-10');
+
+INSERT INTO Reserves VALUES (22, 102, DATE '1998-10-10');
+
+INSERT INTO Reserves VALUES (22, 103, DATE '1998-10-08');
+
+INSERT INTO Reserves VALUES (22, 104, DATE '1998-10-07');
+
+INSERT INTO Reserves VALUES (22, 102, DATE '1998-11-10');
+
+INSERT INTO Reserves VALUES (31, 103, DATE '1998-11-06');
+
+INSERT INTO Reserves VALUES (31, 104, DATE '1998-11-12');
+
+INSERT INTO Reserves VALUES (64, 101, DATE '1998-09-05');
+
+INSERT INTO Reserves VALUES (64, 102, DATE '1998-09-08');
+
+INSERT INTO Reserves VALUES (74, 103, DATE '1998-09-08');
+
+SQL> select*from reserves;
+
+
+
+SID	BID DAY
+
+
+
+22	101 10-OCT-98
+
+22	102 10-OCT-98
+
+22	103 08-OCT-98
+
+22	104 07-OCT-98
+
+22	102 10-NOV-98
+
+31	103 06-NOV-98
+
+31	104 12-NOV-98
+
+64	101 05-SEP-98
+
+64	102 08-SEP-98
+
+74	103 08-SEP-98
+
+JOIN QUERIES
+Simple / Equi Join
+
+
+SELECT S.*
+
+FROM Sailors S
+
+INNER JOIN Reserves R ON S.sid = R.sid WHERE R.bid = 103;
+
+SID SNAME	RATING	AGE
+
+
+
+
+22 Dustin
+7
+45
+
+31 Lubber
+8
+55.5
+
+74 Horatio
+9
+40
+
+
+
+
+Non-Equi Join SELECT S.*
+FROM Sailors S
+
+INNER JOIN Reserves R ON S.sid = R.sid WHERE R.bid <> 103;
+
+
+SID SNAME	RATING	AGE
+
+
+
+
+22 Dustin
+7
+45
+
+22 Dustin
+7
+45
+
+22 Dustin
+7
+45
+
+22 Dustin
+7
+45
+
+31 Lubber
+8
+55.5
+
+64 Horatio
+7
+35
+
+64 Horatio
+7
+35
+
+
+Self Join
+
+
+SELECT X.sname AS Sailor1, Y.sname AS Sailor2, X.age AS Age1,
+Y.age AS Age2 FROM Sailors X
+JOIN Sailors Y ON X.sid <> Y.sid AND X.age > Y.age;
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+Bob	Lubber	63.5
+55.5
+Bob	Dustin	63.5
+45
+Bob	Horatio	63.5
+40
+
+SAILOR1	SAILOR2	AGE1
+AGE2
+Bob	Rusty	63.5
+35
+Bob	Horatio	63.5
+35
+Bob	Brutus	63.5
+33
+
+
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+Bob	Art	63.5
+25.5
+
+Bob	Andy	63.5
+25.5
+Bob	Zorba	63.5
+16
+
+
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+Lubber	Dustin	55.5
+45
+Lubber	Horatio	55.5
+40
+Lubber	Rusty	55.5
+35
+
+SAILOR1	SAILOR2	AGE1
+AGE2
+Lubber	Horatio	55.5
+35
+Lubber	Brutus	55.5
+33
+Lubber	Art	55.5
+25.5
+
+
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+Lubber	Andy	55.5
+25.5
+
+Lubber	Zorba	55.5
+16
+Dustin	Horatio	45
+40
+
+
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+Dustin	Rusty	45
+35
+Dustin	Horatio	45
+35
+Dustin	Brutus	45
+33
+
+SAILOR1	SAILOR2	AGE1
+AGE2
+Dustin	Art	45
+25.5
+Dustin	Andy	45
+25.5
+Dustin	Zorba	45
+16
+
+
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+Horatio	Rusty	40
+35
+
+Horatio	Horatio	40
+35
+Horatio	Brutus	40
+33
+
+
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+Horatio	Art	40
+25.5
+Horatio	Andy	40
+25.5
+Horatio	Zorba	40
+16
+
+SAILOR1	SAILOR2	AGE1
+AGE2
+
+
+
+Rusty	Brutus	35
+
+33
+
+
+
+Rusty	Art	35
+
+25.5
+
+
+
+Rusty	Andy	35
+
+25.5
+
+
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+Rusty	Zorba	35
+16
+
+Horatio	Brutus	35
+33
+Horatio	Art	35
+25.5
+
+
+
+
+
+SAILOR1	SAILOR2	AGE1
+
+
+
+AGE2
+
+Horatio	Andy	35
+25.5
+Horatio	Zorba	35
+16
+Brutus	Art	33
+25.5
+SAILOR1	SAILOR2	AGE1
+AGE2
+Brutus	Andy	33
+25.5
+Brutus	Zorba	33
+16
+Art	Zorba	25.5
+16
+SAILOR1	SAILOR2	AGE1
+AGE2
+Andy	Zorba	25.5
+
+4.Inner Join (Two Tables) SELECT S.sname, R.bid FROM Sailors S
+
+INNER JOIN Reserves R ON S.sid = R.sid;
+SNAME	BID
+
+
+
+
+Dustin
+101
+
+Dustin
+102
+
+Dustin
+103
+
+Dustin
+104
+
+Dustin
+102
+
+Lubber
+103
+
+Lubber
+104
+
+Horatio
+101
+
+Horatio
+102
+
+Horatio
+103
+
+5. Inner Join (Three Tables)
+
+
+SELECT B.bname
+
+
+FROM Sailors S
+
+
+
+INNER JOIN Reserves R ON S.sid = R.sid INNER JOIN Boats B ON R.bid = B.bid WHERE S.sname = 'Lubber';
+
+BNAME
+
+
+
+Clipper Marine
+Left Outer Join SELECT S.sname, R.bid FROM Sailors S
+LEFT JOIN Reserves R ON S.sid = R.sid;
+
+
+
+SNAME	BID
+
+
+
+
+Dustin
+101
+
+Dustin
+102
+
+Dustin
+103
+
+Dustin
+104
+
+Dustin
+102
+
+Lubber
+103
+
+Lubber
+104
+
+Horatio
+101
+
+Horatio
+102
+
+Horatio
+103
+
+
+Rusty
+
+
+
+SNAME	BID
+
+
+
+Zorba Art Brutus Bob Andy
+
+
+Right Outer Join SELECT S.sname, R.bid FROM Sailors S
+RIGHT JOIN Reserves R ON S.sid = R.sid;
+
+
+
+SNAME	BID
+
+
+
+
+Dustin
+101
+
+Dustin
+102
+
+Dustin
+103
+
+Dustin
+104
+
+
+
+Dustin
+102
+
+Lubber
+103
+
+Lubber
+104
+
+Horatio
+101
+
+Horatio
+102
+
+Horatio
+103
+
+8. Full Outer Join
+
+
+
+SELECT S.sname, R.bid, B.color FROM Sailors S
+FULL OUTER JOIN Reserves R ON S.sid = R.sid LEFT JOIN Boats B ON R.bid = B.bid;
+
+
+SNAME	BID COLOR
+
+
+
+Dustin	101 Blue
+
+Horatio	101 Blue
+
+Dustin	102 Red
+
+Dustin	102 Red
+
+Horatio	102 Red
+
+Dustin	103 Green
+
+Lubber	103 Green
+
+Horatio	103 Green
+
+Dustin	104 Red
+
+Lubber	104 Red
+
+Rusty
+
+
+
+SNAME	BID COLOR
+
+
+
+Zorba Art Brutus Bob Andy
+9. Cross Join
+
+SELECT S.sname, B.bname FROM Sailors S
+CROSS JOIN Boats B;
+
+
+
+SNAME	BNAME
+
+
+
+Dustin	Interlake
+
+Brutus	Interlake
+
+Lubber	Interlake
+
+Andy	Interlake
+
+Rusty	Interlake
+
+Horatio	Interlake
+
+Zorba	Interlake
+
+Horatio	Interlake
+
+Art	Interlake
+
+Bob	Interlake
+
+Dustin	Interlake
+
+
+
+SNAME	BNAME
+
+
+
+Brutus	Interlake
+
+Lubber	Interlake
+
+Andy	Interlake
+
+Rusty	Interlake
+
+Horatio	Interlake
+
+Zorba	Interlake
+
+Horatio	Interlake
+
+Art	Interlake
+
+Bob	Interlake
+
+Dustin	Clipper
+
+Brutus	Clipper
+
+
+
+SNAME	BNAME
+
+
+
+Lubber	Clipper
+
+Andy	Clipper
+
+Rusty	Clipper
+
+Horatio	Clipper
+
+Zorba	Clipper
+
+Horatio	Clipper
+
+Art	Clipper
+
+Bob	Clipper
+
+Dustin	Marine
+
+Brutus	Marine
+
+Lubber	Marine
+
+
+
+SNAME	BNAME
+
+
+
+Andy	Marine
+
+Rusty	Marine
+
+Horatio	Marine
+
+Zorba	Marine
+
+Horatio	Marine
+
+Art	Marine
+
+Bob	Marine
