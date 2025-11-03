@@ -1,0 +1,130 @@
+
+create(n:student{Sid: "VTU14500", Sname:"John",
+deptname:"CSE" }
+)
+OUTPUT
+Added 1 label, created 1 node, set 3 properties, completed after 232 ms.
+
+
+Create(n:student {Sid: "VTU14501", Sname:"Dharsana", deptname:"EEE"})
+
+OUTPUT
+Added 1 label, created 1 node, set 3 properties, completed after 16 ms.
+
+Create(n:student { Sid: "VTU14502", Sname:"vijay",
+deptname:"CSE"
+})
+
+
+OUTPUT
+Added 1 label, created 1 node, set 3 properties, completed after 12 ms.
+
+
+Create(n:dept{deptname:"cse",deptid:"d001"})
+
+
+OUTPUT:
+Added 1 label, created 1 node, set 2 properties, completed after 72 ms.
+
+
+Select all the nodes in your database using match command
+
+
+match(n) return(n)
+
+
+OUTPUT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+match(n:student) return(n)
+
+
+OUTPUT:
+
+
+
+Create relationship between student and cse .
+
+
+MATCH(s:student),(d:dept) WHERE s.Sname ='vijay' AND d.deptname=' cse'
+CREATE(s)-[st:STUDIED_AT]->(d)
+return s,d
+
+
+
+
+
+
+OUTPUT:
+
+MATCH(s:student),(d:dept) WHERE s.Sname ='John' AND d.deptname=' cse'
+CREATE(s)-[st:STUDIED_AT]->(d)
+return s,d
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+match(n) return(n)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Delete a node from student
+
+
+match(n:student{Sname:'Dharsana'}) DELETE(n)
+
+
+OUTPUT:
+Deleted 1 node, complaeted after 10834 ms.
