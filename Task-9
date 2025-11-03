@@ -1,0 +1,49 @@
+RecoveringaNOARCHIVELOGDatabase
+
+--FullDatabaseBackup
+
+BACKUP DATABASE [database_name] TO DISK = 'backup_file.bak' WITH INIT, NAME = 'Full Database Backup', STATS = 10;
+
+
+--IncrementalBackup
+
+BACKUP DATABASE [database_name] TO DISK= 'incremental_backup.bak'
+WITH DIFFERENTIAL,NAME= 'IncrementalDatabaseBackup',STATS
+=10;
+
+
+
+--RestoreDatabase
+
+RESTORE DATABASE [database_name] FROM DISK = 'backup_file.bak' WITH REPLACE;
+
+
+--Apply IncrementalBackup
+
+RESTORE DATABASE [database_name] FROM DISK = 'incremental_backup.bak' WITH REPLACE;
+
+--Recoverand Open Database
+
+RECOVERDATABASE[database_name];
+
+ALTERDATABASE[database_name] SETONLINE;
+
+
+
+Scenario2:Restoringthe Server Parameter File
+
+BACKUP SERVER PARAMETER FILE TO FILE = 'spfile.bak'; STARTUP MOUNT;
+RESTORE SERVER PARAMETER FILE FROM FILE = 'spfile.bak'; SHUTDOWN;
+STARTUP;
+
+Scenario 3: Recovery with a Backup Control File BACKUP CONTROLFILE TO FILE = 'controlfile.bak'; STARTUP MOUNT;
+RESTORE CONTROLFILE FROM FILE = 'controlfile.bak'; RECOVER DATABASE USING BACKUP CONTROLFILE; ALTER DATABASE OPEN RESETLOGS;
+
+Output
+BACKUPCONTROLFILEcompletedsuccessfully.
+CONTROLFILElosssimulated.
+RESTORECONTROLFILEcompletedsuccessfully.
+RECOVERDATABASEUSINGBACKUPCONTROLFILEcompleted
+successfully.
+ALTERDATABASE OPENRESETLOGS
+
