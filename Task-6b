@@ -1,0 +1,147 @@
+
+SQL>set server output on;
+SQL>create table ar(eno number(10) primary key , ename varchar(10),exp number(10),sal number(10);
+
+Table created.
+
+SQL>insert into ar values(10,’hema’,12,30000); 1 row created.
+SQL>insert into ar values(11,’kin’,6,22000); 1 row created.
+Example 1:
+
+Procedure using IN parameter
+
+SQL>create or replace procedure pro(ex in number)is sala number(10); 2 begin
+
+
+
+
+select sal into sala from ar where exp=ex;
+if sala>10000 then
+update ar set sal=sal*0.5 where exp=ex;
+else
+update ar set sal=sal*1.5 where exp=ex;
+end if;
+dbms_output.put_line(‘table updated’);
+end;
+/
+
+Procedure created.
+
+SQL>exec pro(6); Table updated.
+PL/SQL procedure successfully completed. SQL>select * from ar;
+ENO
+-----
+ENAME
+-----------
+EXP
+--------
+SAL
+------
+
+10
+hema
+12
+30000
+
+11
+
+Example 2:
+kin
+6
+50000
+
+
+Procedure using OUT parameter
+
+SQL>create or replace procedure pro1(b out number)is
+begin
+select eno into b from ar where exp=6;
+end;
+/
+
+Procedure created.
+
+
+
+
+
+SQL>declare
+b number;
+name varchar(10);
+begin
+pro1(b);
+dbms_output.put_line(b);
+select ename into name from ar where eno=b;
+dbms_ output.put_line(name);
+end;
+10 /
+
+Output:
+11
+Kin
+
+PL/SQL procedure successfully completed.
+
+FUNCTIONS
+
+
+Example 1:
+
+Create a function to find the factorial of the given numbers:
+
+SQL>create or replace function fac(n number)return number is
+i number;
+f number;
+begin
+i:=1;
+f:=1;
+loop
+f:=f*i;
+i:=i+1;
+exit when i>n;
+end loop;
+return f;
+end;
+/
+
+SQL>declare
+r number;
+begin
+r:=fac(5);
+dbms_output.put_line(‘THE FACTORIAL OF THE GIVEN NUMBER IS’||r);
+end;
+/
+
+Output:
+
+THE FACTORIAL OF THE GIVEN NUMBER IS 120.
+
+
+
+
+
+
+
+
+
+
+
+pg. 5
+
+
+Example 2:
+SQL>create or replace function fn(id number) return number is
+amt number;
+begin
+select sal into amt from emp where empno=id;
+return amt;
+end;
+/
+SQL> set server output on
+SQL>declare
+n number;
+begin
+n=fn(101);
+dbms_output.put_line(‘sal’||n);
+end;
+7	/
