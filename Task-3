@@ -1,0 +1,134 @@
+ecute the below statement to create an employee table: CREATE TABLE Employee (
+Name VARCHAR2(45) NOT NULL, Occupation VARCHAR2(35) NOT NULL, Working_Date DATE,
+Working_Hours NUMBER(3)
+);
+
+
+SQL> DESC EMPLOYEE
+Name	Null?	Type
+
+
+NAME	NOT NULL VARCHAR2(45) OCCUPATION		NOT NULL VARCHAR2(35) WORKING_DATE			DATE
+WORKING_HOURS	NUMBER(3)
+
+
+Step 2 : Execute the below statement to insert the records INSERT INTO employee VALUES
+('Robin', 'Scientist', '2020-10-04', 12),('Warner', 'Engineer', '2020-10-04', 10), ('Peter',
+'Actor', '2020-10-04', 13), ('Marco', 'Doctor', '2020-10-04', 14), ('Brayden', 'Teacher',
+'2020-10-04', 12), ('Antonio', 'Business', '2020-10-04', 11);
+
+
+SQL> SELECT*FROM EMPLOYEE;
+
+NAME
+
+
+OCCUPATION	WORKING_D WORKING_HOURS
+
+
+Robin
+Scientist	04-OCT-20	12
+Warner
+Engineer	04-OCT-20	10
+Peter
+Actor	04-OCT-20	13
+Marco
+Doctor	04-OCT-20	14
+Brayden
+Teacher	04-OCT-20	12
+Antonio
+Business	04-OCT-20	11
+
+
+
+Count() Function
+SELECT COUNT(name) FROM employee;
+Sum() Function
+SELECT SUM(working_hours) AS "Total working hours" FROM employee;
+AVG() Function
+SELECT AVG(working_hours) AS "Average working hours" FROM employee;
+MIN() Function
+SELECT MIN(working_hours) AS Minimum_working_hours FROM employee;
+MAX() Function
+SELECT MAX(working_hours) AS Maximum_working_hours FROM employee;
+FIRST() Function
+SELECT working_date FROM employee LIMIT 1;
+SQL Date and Time Functions
+NOW()
+Returns the current date and time. Query:
+SELECT NOW();
+CURDATE()
+Returns the current date. Query:
+SELECT CURDATE();
+CURTIME()
+Returns the current time.
+
+Query:
+SELECT CURTIME();
+DATE()
+Query:
+SELECT Name, DATE(BirthTime) AS BirthDate FROM Test;
+EXTRACT()
+Query1:
+SELECT Name, Extract(DAY FROM BirthTime) AS BirthDay FROM Test; Query2:
+SELECT Name, Extract(YEAR FROM BirthTime) AS BirthYear FROM Test; Query3:
+SELECT Name, Extract(SECOND FROM BirthTime) AS BirthSecond FROM Test;
+DATE_ADD()
+Query 1:
+SELECT Name, DATE_ADD(BirthTime, INTERVAL 1 YEAR) AS BirthTimeModified FROM Test;
+
+
+Query 2:
+SELECT Name, DATE_ADD(BirthTime, INTERVAL 30 DAY) AS BirthDayModified FROM Test;
+DATEDIFF()
+SELECT DATEDIFF(month,'2017-01-13','2017-01-03') AS DateDiff
+
+
+
+
+
+
+
+SQL OPERATORS
+SQL OPERATORS
+AND Operator Query
+SELECT * FROM employee WHERE emp_city = 'Allahabad' AND emp_country = 'India';
+IN Operator
+Query
+SELECT * FROM employee WHERE emp_city IN ('Allahabad', 'Patna');
+NOT Operator
+Query
+SELECT * FROM employee WHERE emp_city NOT LIKE 'A%';
+
+
+OR Operator
+Query
+SELECT * FROM employee WHERE emp_city = 'Varanasi' OR emp_country = 'India';
+LIKE Operator
+Query
+SELECT * FROM employee WHERE emp_city LIKE 'P%';
+
+
+BETWEEN Operator
+Query
+
+SELECT * FROM employee WHERE emp_id BETWEEN 101 AND 104;
+
+
+SQL Comparison Operators
+1. = (Equal to) Operator
+SELECT * FROM customers WHERE age = 20;
+!= (Not equal to) Operator SELECT * FROM customers WHERE age != 20;
+> (Greater than) Operator
+SELECT * FROM customers WHERE age > 20;
+!> (Not greater than) Operator
+SELECT * FROM customers WHERE age !> 20;
+< (Less than) Operator
+SELECT * FROM customers WHERE age < 20;
+!< (Not less than) Operator
+SELECT * FROM customers WHERE age !< 20;
+>= (Greater than or equal to) Operator SELECT * FROM customers WHERE age >= 20;
+<= (Less than or equal to) Operator
+SELECT * FROM customers WHERE age <= 20;
+<> (Not equal to) Operator
+SELECT * FROM customers WHERE age <> 20;
