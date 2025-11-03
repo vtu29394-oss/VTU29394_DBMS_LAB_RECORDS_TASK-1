@@ -1,0 +1,50 @@
+Identify employee attributes: Employee_ID, Name, Department, Job_Title, Manager_ID, Hire_Date, Salary.
+Define relational schema: Employee (Employee_ID, Name, Department, Job_Title, Manager_ID, Hire_Date, Salary).
+Determinefunctional dependencies(FDs)betweenattributes:
+Employee_ID -> Name, Department, Job_Title, Manager_ID, Hire_Date, Salary
+Department-> Manager_ID
+Manager_ID-> Name
+
+
+Step2: Convertto1NF
+
+
+Eliminaterepeatinggroupsorarrays(none inthisexample).
+Create separate tables for each repeating group (none in this example).
+
+
+Step3: Convertto2NF
+
+
+Ensureeach non-keyattributedependsontheentireprimary key.
+
+Move non-key attributes to separate tables if they depend on only part of the primary key.
+Create Department table: Department (Department_ID, Manager_ID, Name).
+Create Employee table: Employee (Employee_ID, Name, Department_ID, Job_Title, Hire_Date, Salary).
+OUTPUT:-
+Employee(Employee_ID, Name, Department_ID, Job_Title, Hire_Date, Salary)
+Department(Department_ID,Manager_ID,Name)
+
+
+Step4: Convertto3NF
+
+
+Ensurethereareno transitivedependencies.
+Move non-key attributes to separate tables if they depend on another non-key attribute.
+CreateManagertable: Manager (Manager_ID, Name).
+UpdateDepartmenttable:Department(Department_ID,Manager_ID).
+
+
+Step5: ConverttoBCNF
+
+
+Ensure everydeterminantisacandidatekey.
+Checkforoverlappingcandidatekeys.
+Decomposerelationstoeliminateredundancy.
+
+
+
+-Nofurtherdecompositionneeded.
+OUTPUT:-
+Manager(Manager_ID, Name) Department(Department_ID, Manager_ID)
+Employee(Employee_ID, Name, Department_ID, Job_Title, Hire_Date, Salary)
